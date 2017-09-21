@@ -30,7 +30,7 @@ const app = new Vue({
             setTimeout(function () {
                 const resp = confirm(message + "\n Do you want to start a new game?");
                 resp ? vm.startGame() : vm.start = true;
-            }, 100);
+            }, 10);
         },
         startGame: function () {
             this.monsterHealth = 100;
@@ -40,10 +40,12 @@ const app = new Vue({
             this.logs = [];
         },
         action: function (min, max, heal) {
-            const attackPlayer = this.getRandomNumber(min, max);
-            const attackMonster = this.getRandomNumber(min, max);
+            if (this.monsterHealth > 0 || this.playerHealth > 0) {
+                const attackPlayer = this.getRandomNumber(min, max);
+                const attackMonster = this.getRandomNumber(min, max);
 
-            !heal ? this.doAction(attackPlayer, attackMonster) : this.doAction(0, attackMonster, attackPlayer);
+                !heal ? this.doAction(attackPlayer, attackMonster) : this.doAction(0, attackMonster, attackPlayer);
+            }
         },
         doAction: function (attackPlayer, attackMonster, heal) {
             if (!heal) {
