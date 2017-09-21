@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Monster Slayer</title>
+    <script src="https://npmcdn.com/vue/dist/vue.js"></script>
+    <link rel="stylesheet" href="css/foundation.min.css">
+    <link rel="stylesheet" href="css/app.css">
+</head>
+
+<body>
+    <div id="app">
+        <section class="row">
+            <div class="small-6 columns">
+                <h1 class="text-center">YOU</h1>
+                <div class="healthbar">
+                    <div class="healthbar text-center" style="margin: 0; color: white;" :class="[playerHealth > 40 ?  'green': 'red']" :style="{'width': playerHealth + '%'}">
+                        {{playerHealth}}
+                    </div>
+                </div>
+            </div>
+            <div class="small-6 columns">
+                <h1 class="text-center">MONSTER</h1>
+                <div class="healthbar">
+                    <div class="healthbar text-center" style="margin: 0; color: white;" :style="{'width': monsterHealth + '%'}" :class="[monsterHealth > 40 ?  'green': 'red']">
+                        {{monsterHealth}}
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="row controls" v-if="start">
+            <div class="small-12 columns">
+                <button id="start-game" @click="startGame">START NEW GAME</button>
+            </div>
+        </section>
+        <section class="row controls" v-else>
+            <div class="small-12 columns">
+                <button id="attack" @click="action(5,10)">ATTACK</button>
+                <button id="special-attack" @click="action(5,20)">SPECIAL ATTACK</button>
+                <button id="heal" @click="action(5,10,true)">HEAL</button>
+                <button id="give-up" @click="startGame">GIVE UP</button>
+            </div>
+        </section>
+        <section class="row log" v-if="logs.length > 0">
+            <div class="small-12 columns">
+                <ul>
+                    <li v-for="(log, index) in logs" :class="[index % 2 == 0 ?  'player-turn ': 'monster-turn']">
+                        {{log}}
+                    </li>
+                </ul>
+            </div>
+        </section>
+    </div>
+    <script src="./app.js"></script>
+</body>
+
+</html>
